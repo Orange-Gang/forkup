@@ -1,5 +1,5 @@
 import { redirect } from "@sveltejs/kit";
-import { auth, githubAuth } from "$lib/server/lucia.js";
+import { auth, githubAuth } from "$lib/server/lucia";
 import { OAuthRequestError } from "@lucia-auth/oauth";
 
 export const GET = async ({ url, cookies, locals }) => {
@@ -26,8 +26,8 @@ export const GET = async ({ url, cookies, locals }) => {
 			const user = await createUser({
 				attributes: {
 					username: githubUser.login,
-          displayName: githubUser.name,
-          avatar: githubUser.avatar_url
+					displayName: githubUser.name,
+					avatar: githubUser.avatar_url
 				}
 			});
 			return user;

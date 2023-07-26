@@ -1,5 +1,5 @@
 import { dev } from "$app/environment";
-import { githubAuth } from "$lib/server/lucia.js";
+import { githubAuth } from "$lib/server/lucia";
 
 export const GET = async ({ cookies }) => {
 	const [url, state] = await githubAuth.getAuthorizationUrl();
