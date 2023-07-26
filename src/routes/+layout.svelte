@@ -3,16 +3,17 @@
 
   export let data : LayoutData;
   const user = data.user;
+  $: console.log({ user });
 </script>
 
 <div class="flex flex-col gap-8 w-full h-full min-w-screen min-h-screen">
   <nav class="flex flex-row justify-between items-center w-full h-fit px-8 py-4">
-    <h1 class="text-2xl font-bold">Forkup</h1>
+    <a href="/" class="text-2xl font-bold">Forkup</a>
 
     <div class="flex flex-row gap-4 items-center">
       {#if user}
-        <a href="/profile" class="transition-all duration-300 hover:underline">
-          {user.username}
+        <a href="/profile">
+          <img src={user.avatar} alt="Profile" class="rounded-full w-8 h-8 lg:w-12 lg:h-12"/>
         </a>
         <form method="POST" action="/profile?/signOut">
           <button class="text-black border bg-white px-4 py-2 transition-all duration-300 hover:bg-black hover:text-white">
