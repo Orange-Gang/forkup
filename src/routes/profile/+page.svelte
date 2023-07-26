@@ -5,4 +5,5 @@
 </script>
 
 <h3 class="text-2xl">Profile</h3>
+<p>{user.displayName}</p>
 <p>{user.username}</p>

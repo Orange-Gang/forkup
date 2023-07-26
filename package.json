@@ -23,9 +23,9 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@lucia-auth/adapter-prisma": "^2.0.0",
-		"@lucia-auth/oauth": "^1.2.1",
+		"@lucia-auth/adapter-prisma": "^3.0.0",
+		"@lucia-auth/oauth": "^2.0.0",
 		"@prisma/client": "^5.0.0",
-		"lucia-auth": "^1.8.0"
+		"lucia": "^2.0.0"
 	}
 }

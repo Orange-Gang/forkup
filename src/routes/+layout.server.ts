@@ -1,5 +1,7 @@
+import { auth } from "$lib/server/lucia.ts";
+
 export async function load({ locals }) {
-  const { user, session } = await locals.auth.validateUser();
+  const session = await locals.auth?.validate();
   console.log({ session });
-  return { user };
+  return { user: session?.user }
 }

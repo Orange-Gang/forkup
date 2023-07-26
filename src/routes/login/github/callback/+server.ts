@@ -1,47 +1,57 @@
-import { auth, githubAuth } from "$lib/server/lucia.ts";
 import { redirect } from "@sveltejs/kit";
+import { auth, githubAuth } from "$lib/server/lucia.js";
+import { OAuthRequestError } from "@lucia-auth/oauth";
 
-import type { RequestHandler } from "./$types";
-
-export const GET: RequestHandler = async ({ cookies, url, locals }) => {
-	// get code and state params from url
-	const code = url.searchParams.get("code");
-	const state = url.searchParams.get("state");
-
-  console.log({ code, state });
-
-	// get stored state from cookies
+export const GET = async ({ url, cookies, locals }) => {
 	const storedState = cookies.get("github_oauth_state");
-
-  console.log({ storedState });
+	const state = url.searchParams.get("state");
+	const code = url.searchParams.get("code");
 
 	// validate state
-	if (!state || !storedState || state !== storedState) {
-		throw new Response(null, { status: 401 });
+	if (!storedState || !state || storedState !== state || !code) {
+    console.log("invalidated state");
+		return new Response(null, {
+			status: 400
+		});
 	}
-
 	try {
-		const { existingUser, providerUser, createUser } =
+		const { existingUser, githubUser, createUser } =
 			await githubAuth.validateCallback(code);
+
+    console.log({ githubUser });
 
 		const getUser = async () => {
 			if (existingUser) return existingUser;
-			// create a new user if the user does not exist
-			return await createUser({
-				// attributes
-				username: providerUser.login
+      
+			const user = await createUser({
+				attributes: {
+					username: githubUser.login,
+          displayName: githubUser.name,
+          avatar: githubUser.avatar_url
+				}
 			});
+			return user;
 		};
-		const user = await getUser();
-		const session = await auth.createSession(user.userId);
-		locals.auth.setSession(session);
-	} catch (e) {
-		// invalid code
-    console.log("error", e);
 
+		const user = await getUser();
+		const session = await auth.createSession({
+			userId: user.userId,
+			attributes: {}
+		});
+		locals.auth.setSession(session);
+
+	} catch (e) {
+    console.log("ERROR", { e });
+		if (e instanceof OAuthRequestError) {
+			// invalid code
+			return new Response(null, {
+				status: 400
+			});
+		}
 		return new Response(null, {
 			status: 500
 		});
 	}
-	throw redirect(302, "/");
+
+  throw redirect(303, "/");
 };
