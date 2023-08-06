@@ -11,16 +11,34 @@ datasource db {
 }
 
 model User {
-  id           String    @id @unique
+  id String @id @unique
 
+  // used by Lucia
   auth_session Session[]
   auth_key     Key[]
 
-  username String
+  // Custom Fields
+
+  // User Information
+  username    String
   displayName String
-  avatar String
+  avatar      String
+
+  // Content Connections
+  posts Post[]
 }
 
+// Forkup models
+model Post {
+  id        String   @id @default(cuid())
+  content   String
+  author    User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  draft     Boolean  @default(false)
+  userId    String
+}
+
+// Lucia: auth models
 model Session {
   id             String @id @unique
   user_id        String
