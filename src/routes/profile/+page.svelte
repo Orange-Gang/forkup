@@ -1,6 +1,7 @@
 <script lang="ts">
-  export let data : LayoutData;
+  import type { LayoutData } from "../$types";
 
+  export let data : LayoutData;
   const user = data.user;
 </script>
 

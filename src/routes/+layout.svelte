@@ -1,5 +1,6 @@
 <script lang="ts">
   import "../app.css";
+  import type { LayoutData } from "./$types";
 
   export let data : LayoutData;
   const user = data.user;
@@ -31,7 +32,7 @@
     </div>
   </nav>
 
-  <main class="flex flex-col p-8 grow">
+  <main class="flex flex-col p-8 grow w-full h-full">
     <slot />
   </main>
 
