@@ -4,7 +4,6 @@
 
   export let data : LayoutData;
   const user = data.user;
-  $: console.log({ user });
 </script>
 
 <div class="flex flex-col gap-8 w-full h-full min-w-screen min-h-screen">

@@ -28,6 +28,7 @@
 		"@lucia-auth/oauth": "^2.0.0",
 		"@prisma/client": "^5.0.0",
 		"lucia": "^2.0.0",
-		"svelte-exmarkdown": "^2.1.0"
+		"svelte-exmarkdown": "^2.1.0",
+		"timeago.js": "^4.0.2"
 	}
 }
