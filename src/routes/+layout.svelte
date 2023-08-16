@@ -1,7 +1,10 @@
 <script lang="ts">
 	import '../app.css';
+	import type { LayoutData } from './$types';
 
 	export let data: LayoutData;
+
+	// TODO: figure out how to get proper typing here
 	const user = data.user;
 	$: console.log({ user });
 </script>

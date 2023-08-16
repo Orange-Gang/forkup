@@ -1,5 +1,6 @@
 <script lang="ts">
-	export let data: LayoutData;
+	import type { PageData } from './$types';
+	export let data: PageData;
 
 	const user = data.user;
 </script>
