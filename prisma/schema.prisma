@@ -11,14 +11,27 @@ datasource db {
 }
 
 model User {
-  id           String    @id @unique
+  id String @id @unique
 
   auth_session Session[]
   auth_key     Key[]
 
-  username String
+  username    String
   displayName String
-  avatar String
+  avatar      String
+
+  followers Follows[] @relation("following")
+  following Follows[] @relation("follower")
+}
+
+model Follows {
+  following   User   @relation("following", fields: [followingId], references: [id])
+  followingId String
+
+  follower   User   @relation("follower", fields: [followerId], references: [id])
+  followerId String
+
+  @@id([followerId, followingId])
 }
 
 model Session {
