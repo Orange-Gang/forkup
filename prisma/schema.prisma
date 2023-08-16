@@ -32,6 +32,7 @@ model Follows {
   followerId String
 
   @@id([followerId, followingId])
+  @@unique([followerId, followingId])
 }
 
 model Session {
