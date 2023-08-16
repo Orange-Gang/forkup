@@ -36,6 +36,7 @@ model Follows {
   followerId String
 
   @@id([followerId, followingId])
+  @@unique([followerId, followingId])
 }
 
 // Forkup models
