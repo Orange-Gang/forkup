@@ -4,6 +4,10 @@ on:
   pull_request:
     branches: [main]
 
+env:
+  GITHUB_CLIENT_ID: ""
+  GITHUB_CLIENT_SECRET: ""
+
 concurrency:
     group: ${{ github.workflow }}-${{ github.ref }}
     cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
