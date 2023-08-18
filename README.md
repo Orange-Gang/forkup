@@ -5,16 +5,19 @@
 </div>
 
 #### Built With:
+
 - Svelte (& SvelteKit)
 - TailwindCSS
 - Lucia Auth
 - Prisma ORM
 
 # Contributing
-*New contributors welcome!* Anyone of any skills are encouraged to learn the tech stack
+
+_New contributors welcome!_ Anyone of any skills are encouraged to learn the tech stack
 above and contribute.
 
 # Roadmap
+
 **To be determined**
 
 Join Discord for the latest plans.

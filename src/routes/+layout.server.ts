@@ -1,4 +1,4 @@
-import { auth } from "$lib/server/lucia";
+import type { LayoutServerLoad } from './$types';
 
 export async function load({ locals }) {
   const session = await locals.auth?.validate();
