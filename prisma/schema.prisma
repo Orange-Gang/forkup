@@ -24,8 +24,19 @@ model User {
   displayName String
   avatar      String
 
-  // Content Connections
-  posts Post[]
+  followers Follows[] @relation("following")
+  following Follows[] @relation("follower")
+}
+
+model Follows {
+  following   User   @relation("following", fields: [followingId], references: [id])
+  followingId String
+
+  follower   User   @relation("follower", fields: [followerId], references: [id])
+  followerId String
+
+  @@id([followerId, followingId])
+  @@unique([followerId, followingId])
 }
 
 // Forkup models
