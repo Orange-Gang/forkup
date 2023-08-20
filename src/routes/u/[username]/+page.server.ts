@@ -1,4 +1,5 @@
 import { prisma_client } from '$lib/prisma';
+import { error } from '@sveltejs/kit';
 
 export async function load({ params }) {
 	const user_data = await prisma_client.user.findUnique({
@@ -9,6 +10,10 @@ export async function load({ params }) {
 			following: true
 		}
 	});
+
+	if (!user_data) {
+		throw error(404, 'User not found');
+	}
 
 	const { posts, followers, following, ...current_user } = user_data;
 

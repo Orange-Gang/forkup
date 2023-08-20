@@ -1,4 +1,5 @@
 import { prisma_client } from '$lib/prisma';
+import { error } from '@sveltejs/kit';
 
 export async function load() {
 	const firehose = await prisma_client.post.findMany({
@@ -13,11 +14,15 @@ export async function load() {
 export const actions = {
 	createPost: async ({ locals, request }) => {
 		const form = await request.formData();
-		const content = form.get('content');
+		const content = form.get('content') as string;
 		const session = await locals.auth?.validate();
 		const user = session?.user;
 
 		// validate session & form inputs (zod, valibot, trpc???)
+
+		if (!content || !user) {
+			throw error(400, 'Bad request');
+		}
 
 		await prisma_client.post.create({
 			data: {
