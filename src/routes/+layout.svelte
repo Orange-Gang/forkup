@@ -3,10 +3,7 @@
 	import type { LayoutData } from './$types';
 
 	export let data: LayoutData;
-
-	// TODO: figure out how to get proper typing here
 	const user = data.user;
-	$: console.log({ user });
 </script>
 
 <div class="flex flex-col gap-8 w-full h-full min-w-screen min-h-screen">
@@ -15,7 +12,7 @@
 
 		<div class="flex flex-row gap-4 items-center">
 			{#if user}
-				<a href="/profile">
+				<a href={`/u/${user.username}`}>
 					<img src={user.avatar} alt="Profile" class="rounded-full w-8 h-8 lg:w-12 lg:h-12" />
 				</a>
 				<form method="POST" action="/profile?/signOut">
@@ -36,7 +33,7 @@
 		</div>
 	</nav>
 
-	<main class="flex flex-col p-8 grow">
+	<main class="flex flex-col p-8 grow w-full h-full">
 		<slot />
 	</main>
 

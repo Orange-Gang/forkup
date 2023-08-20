@@ -13,13 +13,18 @@ datasource db {
 model User {
   id String @id @unique
 
+  // used by Lucia
   auth_session Session[]
   auth_key     Key[]
 
-  username    String
+  // Custom Fields
+
+  // User Information
+  username    String @unique
   displayName String
   avatar      String
 
+  posts Post[]
   followers Follows[] @relation("following")
   following Follows[] @relation("follower")
 }
@@ -35,6 +40,18 @@ model Follows {
   @@unique([followerId, followingId])
 }
 
+// Forkup models
+model Post {
+  id        String   @id @default(cuid())
+  content   String
+  author    User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  draft     Boolean  @default(false)
+  userId    String
+
+}
+
+// Lucia: auth models
 model Session {
   id             String @id @unique
   user_id        String
