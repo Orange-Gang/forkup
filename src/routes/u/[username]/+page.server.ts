@@ -26,7 +26,7 @@ export const actions = {
 		const user_to_follow = form_data.get('id');
 
 		// update follow
-		const updated_follows = await prisma_client.follows.create({
+		await prisma_client.follows.create({
 			data: {
 				followerId: logged_user.userId as string,
 				followingId: user_to_follow as string
@@ -40,7 +40,7 @@ export const actions = {
 		const form_data = await request.formData();
 		const user_to_unfollow = form_data.get('id');
 
-		const removed_follows = await prisma_client.follows.delete({
+		await prisma_client.follows.delete({
 			where: {
 				followerId_followingId: {
 					followerId: logged_user.userId as string,

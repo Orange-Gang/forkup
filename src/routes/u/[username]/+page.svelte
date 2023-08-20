@@ -4,7 +4,9 @@
 
 	const { user, current_user, posts, followers, following } = data;
 
-	$: logged_user_is_following = followers.find((f) => f.followerId === user.userId);
+	$: logged_user_is_following = followers.find(
+		(f: { followerId: string; followingId: string }) => f.followerId === user.userId
+	);
 	$: console.log(logged_user_is_following);
 </script>
 

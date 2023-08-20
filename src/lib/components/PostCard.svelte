@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { Post, User } from '@prisma/client';
 	import Markdown from 'svelte-exmarkdown';
 	import { format } from 'timeago.js';
+	import type { Post, User } from '@prisma/client';
 
 	export let post: Post;
 	export let author: User;

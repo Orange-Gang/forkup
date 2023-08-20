@@ -19,7 +19,7 @@ export const actions = {
 
 		// validate session & form inputs (zod, valibot, trpc???)
 
-		const new_post = await prisma_client.post.create({
+		await prisma_client.post.create({
 			data: {
 				content,
 				author: { connect: { id: user.userId } }
