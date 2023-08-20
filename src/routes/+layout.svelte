@@ -13,6 +13,7 @@
 		<div class="flex flex-row gap-4 items-center">
 			{#if user}
 				<a href={`/u/${user.username}`}>
+
 					<img src={user.avatar} alt="Profile" class="rounded-full w-8 h-8 lg:w-12 lg:h-12" />
 				</a>
 				<form method="POST" action="/profile?/signOut">

@@ -25,7 +25,6 @@ model User {
   avatar      String
 
   posts Post[]
-
   followers Follows[] @relation("following")
   following Follows[] @relation("follower")
 }
@@ -49,6 +48,7 @@ model Post {
   createdAt DateTime @default(now())
   draft     Boolean  @default(false)
   userId    String
+
 }
 
 // Lucia: auth models
