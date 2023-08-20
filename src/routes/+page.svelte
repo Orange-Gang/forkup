@@ -12,6 +12,6 @@
 
 <div class="flex flex-col mx-auto gap-8">
   {#each firehose as firepost}
-    <PostCard post={firepost} />
+    <PostCard post={firepost} author={firepost.author} />
   {/each}
 </div>

@@ -3,7 +3,8 @@ import { prisma_client } from "$lib/prisma";
 export async function load() {
   const firehose = await prisma_client.post.findMany({
     take: 10,
-    include: { author: true }
+    include: { author: true },
+    orderBy: { createdAt: 'desc' },
   });
 
   return { firehose };

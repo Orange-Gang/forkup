@@ -1,9 +1,10 @@
 <script lang="ts">
-  import type { Post } from "@prisma/client";
+  import type { Post, User } from "@prisma/client";
   import Markdown from "svelte-exmarkdown";
   import { format } from "timeago.js";
 
   export let post : Post;
+  export let author : User;
   let is_expanded = false;
   let content_height : number;
 
@@ -14,17 +15,17 @@
   <div class="flex flex-row justify-between pt-4"> 
     <div class="flex flex-row gap-4">
       <img 
-        src={post.author.avatar} 
-        alt={post.author.username + " profile picture"}
+        src={author.avatar} 
+        alt={author.username + " profile picture"}
         class="w-12 h-12 rounded-full"
       />
       <div class="flex flex-col">
-        <a href={`/${post.author.id}`} class="font-bold">{post.author.displayName}</a>
+        <a href={`/u/${author.username}`} class="font-bold">{author.displayName}</a>
         <a 
-          href={`/${post.author.id}`}
+          href={`/u/${author.username}`}
           class="hover:underline"
         >
-          @{post.author.username} <span>| { format(post.createdAt) }</span>
+          @{author.username} <span>| { format(post.createdAt) }</span>
         </a>
       </div>
     </div>

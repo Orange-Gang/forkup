@@ -20,9 +20,11 @@ model User {
   // Custom Fields
 
   // User Information
-  username    String
+  username    String @unique
   displayName String
   avatar      String
+
+  posts Post[]
 
   followers Follows[] @relation("following")
   following Follows[] @relation("follower")
