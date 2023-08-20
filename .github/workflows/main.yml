@@ -5,12 +5,12 @@ on:
     branches: [main]
 
 env:
-  GITHUB_CLIENT_ID: ""
-  GITHUB_CLIENT_SECRET: ""
+  GITHUB_CLIENT_ID: ''
+  GITHUB_CLIENT_SECRET: ''
 
 concurrency:
-    group: ${{ github.workflow }}-${{ github.ref }}
-    cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 jobs:
   format:
@@ -23,14 +23,14 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: latest
-          cache: "npm"
+          cache: 'npm'
 
-      - name: Install Dependencies  
+      - name: Install Dependencies
         run: npm ci
 
       - name: Format
         run: npm run format
-        
+
   typecheck:
     runs-on: ubuntu-latest
     steps:
@@ -41,14 +41,14 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: latest
-          cache: "npm"
+          cache: 'npm'
 
-      - name: Install Dependencies  
+      - name: Install Dependencies
         run: npm ci
 
       - name: Check Types
         run: npm run check
-        
+
   lint:
     runs-on: ubuntu-latest
     steps:
@@ -59,11 +59,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: latest
-          cache: "npm"
+          cache: 'npm'
 
-      - name: Install Dependencies  
+      - name: Install Dependencies
         run: npm ci
 
       - name: Lint
         run: npm run lint
-        
