@@ -32,5 +32,17 @@ export const actions = {
 		});
 
 		// if !new_post, throw fail "Cannot post at this time"
+	},
+	deletePost: async ({ request }) => {
+		const form = await request.formData();
+		const post_id = form.get('id') as string;
+
+		if (!post_id) {
+			throw error(400, 'Bad request');
+		}
+
+		await prisma_client.post.delete({
+			where: { id: post_id }
+		});
 	}
 };

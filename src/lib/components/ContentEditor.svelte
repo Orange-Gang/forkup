@@ -8,7 +8,7 @@
 	}
 </script>
 
-<section class="flex flex-col w-full h-full gap-4">
+<section class="flex flex-col mx-auto w-full max-w-2xl h-full gap-4">
 	<div class="flex flex-row justify-between w-full">
 		<div class="flex flex-row gap-4 w-full">
 			<button

@@ -2,15 +2,24 @@
 	import Markdown from 'svelte-exmarkdown';
 	import { format } from 'timeago.js';
 	import type { Post, User } from '@prisma/client';
+	import { page } from '$app/stores';
 
 	export let post: Post;
 	export let author: User;
+	const user = $page.data.user;
 	let is_expanded = false;
+	let is_menu_expanded = false;
 	let content_height: number;
 
 	function toggleExpand() {
 		is_expanded = !is_expanded;
 	}
+
+	function menuExpand() {
+		is_menu_expanded = !is_menu_expanded;
+	}
+
+	$: is_logged_in_post = user ? author.id === user.userId : false;
 </script>
 
 <section class="relative flex flex-col w-full max-w-2xl px-8 gap-4 border">
@@ -28,6 +37,21 @@
 				</a>
 			</div>
 		</div>
+
+		{#if is_logged_in_post}
+			<button on:click={menuExpand} class="relative">
+				<span class="text-red-500 border border-red-500 px-4 py-2 rounded-xl"> Delete </span>
+				{#if is_menu_expanded}
+					<div class="absolute w-fit px-4 py-2 -mb-12 flex flex-row gap-2 justify-self-center">
+						<form method="POST" action="?/deletePost">
+							<input name="id" type="hidden" value={post.id} />
+							<button>Yes</button>
+						</form>
+						<button>No</button>
+					</div>
+				{/if}
+			</button>
+		{/if}
 	</div>
 
 	<article bind:clientHeight={content_height} class="relative prose overflow-hidden">
