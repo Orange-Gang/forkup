@@ -2,35 +2,15 @@ import { prisma_client } from '$lib/prisma';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad, Actions } from './$types';
 
-export const load: PageServerLoad = async ({locals}) => {
-  const session = await locals.auth?.validate();
-  const user = session?.user;
-
-  if (!user) {
+export const load: PageServerLoad = async () => {
 
 	const firehose = await prisma_client.post.findMany({
 		take: 10,
 		include: { author: true },
 		orderBy: { createdAt: 'desc' }
 	});
-    return { firehose }
-  }
 
-  const firehose = await prisma_client.user.findUnique({
-    where: {
-      id: user?.userId,
-    },
-    select: {
-      posts: {
-        include: {
-          author: true
-        }
-      },
-    },
-  })
-
-
-	return { firehose: firehose?.posts };
+  return { firehose }
 }
 
 export const actions: Actions = {
