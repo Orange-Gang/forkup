@@ -25,7 +25,6 @@ export const actions = {
 		const session = await locals.auth?.validate();
 		const logged_user = session?.user;
 
-
 		const form_data = await request.formData();
 		const user_to_follow = form_data.get('id');
 

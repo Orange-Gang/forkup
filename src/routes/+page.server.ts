@@ -3,15 +3,14 @@ import { error } from '@sveltejs/kit';
 import type { PageServerLoad, Actions } from './$types';
 
 export const load: PageServerLoad = async () => {
-
 	const firehose = await prisma_client.post.findMany({
 		take: 10,
 		include: { author: true },
 		orderBy: { createdAt: 'desc' }
 	});
 
-  return { firehose }
-}
+	return { firehose };
+};
 
 export const actions: Actions = {
 	createPost: async ({ locals, request }) => {
