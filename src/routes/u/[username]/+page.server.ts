@@ -28,7 +28,7 @@ export const actions = {
 		console.log({ logged_user });
 
 		const form_data = await request.formData();
-		const user_to_follow = form_data.get('id');
+		const user_to_follow = form_data.get('id') as string;
 
 		// update follow
 		await prisma_client.follows.create({
@@ -50,6 +50,36 @@ export const actions = {
 				followerId_followingId: {
 					followerId: logged_user.userId as string,
 					followingId: user_to_unfollow as string
+				}
+			}
+		});
+	},
+	block: async ({ request, locals }) => {
+		const session = await locals.auth?.validate();
+		const logged_user = session?.user;
+
+		const form_data = await request.formData();
+		const user_to_block = form_data.get('id');
+
+		await prisma_client.blocked.create({
+			data: {
+				blockedById: logged_user.userId as string,
+				blockedUserId: user_to_block as string
+			}
+		});
+	},
+	unblock: async ({ request, locals }) => {
+		const session = await locals.auth?.validate();
+		const logged_user = session?.user;
+
+		const form_data = await request.formData();
+		const user_to_unblock = form_data.get('id') as string;
+
+		await prisma_client.blocked.delete({
+			where: {
+				blockedById_blockedUserId: {
+					blockedById: logged_user.userId as string,
+					blockedUserId: user_to_unblock
 				}
 			}
 		});

@@ -10,6 +10,18 @@
 		  )
 		: false;
 	$: console.log(logged_user_is_following);
+	$: logged_user_has_blocked = user
+		? user.blocked.find(
+				(b: { blockedId: string; blockerId: string }) => b.blockedId === user.userId
+		  )
+		: false;
+	$: console.log(logged_user_has_blocked);
+	$: logged_user_is_blocked = user
+		? user.blocked.find(
+				(b: { blockedId: string; blockerId: string }) => b.blockerId === user.userId
+		  )
+		: false;
+	$: console.log(logged_user_is_blocked);
 </script>
 
 <section class="flex flex-col items-center gap-2">
@@ -42,7 +54,13 @@
 </section>
 
 <section class="flex flex-col items-center gap-8 mt-8">
-	{#each posts as post}
-		<PostCard {post} author={current_user} />
-	{/each}
+	{#if logged_user_has_blocked}
+		<p>You have blocked this user and cannot see their posts</p>
+	{:else if logged_user_is_blocked}
+		<p>This user has blocked you and you cannot see their posts</p>
+	{:else}
+		{#each posts as post}
+			<PostCard {post} author={current_user} />
+		{/each}
+	{/if}
 </section>

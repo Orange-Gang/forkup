@@ -17,18 +17,38 @@ model User {
   auth_session Session[]
   auth_key     Key[]
 
-  // Custom Fields
+  // custom Fields
 
-  // User Information
+  // user Information
   username    String @unique
   displayName String
   avatar      String
 
-  posts Post[]
+  // user relationships
+  posts     Post[]
   followers Follows[] @relation("following")
   following Follows[] @relation("follower")
+
+  // blocked users
+  blockedUsers Blocked[] @relation("blockedBy")
+  blockedBy    Blocked[] @relation("blockedUser")
 }
 
+// blocked users
+model Blocked {
+  blockedBy   User   @relation("blockedBy", fields: [blockedById], references: [id])
+  blockedById String
+
+  blockedUser   User   @relation("blockedUser", fields: [blockedUserId], references: [id])
+  blockedUserId String
+
+  @@id([blockedById, blockedUserId])
+  @@unique([blockedById, blockedUserId])
+}
+
+// user relationships
+
+// follower / following
 model Follows {
   following   User   @relation("following", fields: [followingId], references: [id])
   followingId String
@@ -40,7 +60,9 @@ model Follows {
   @@unique([followerId, followingId])
 }
 
-// Forkup models
+// forkup models
+
+// post content 
 model Post {
   id        String   @id @default(cuid())
   content   String
@@ -48,10 +70,11 @@ model Post {
   createdAt DateTime @default(now())
   draft     Boolean  @default(false)
   userId    String
-
 }
 
-// Lucia: auth models
+// lucia: auth models
+
+// session - used to keep track of active and idle sessions
 model Session {
   id             String @id @unique
   user_id        String
@@ -62,6 +85,7 @@ model Session {
   @@index([user_id])
 }
 
+// key: login methods
 model Key {
   id              String  @id @unique
   hashed_password String?
