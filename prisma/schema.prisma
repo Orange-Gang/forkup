@@ -30,8 +30,8 @@ model User {
   following Follows[] @relation("follower")
 
   // blocked users
-  blockedUsers Blocked[] @relation("blockedBy")
-  blockedBy    Blocked[] @relation("blockedUser")
+  blockedBy   Blocked[] @relation("blockedBy")
+  blockedUser Blocked[] @relation("blockedUser")
 }
 
 // blocked users

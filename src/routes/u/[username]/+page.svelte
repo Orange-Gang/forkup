@@ -2,7 +2,7 @@
 	import PostCard from '$lib/components/PostCard.svelte';
 	export let data;
 
-	const { user, current_user, posts, followers, following } = data;
+	const { user, current_user, posts, followers, following, blockedUser, blockedBy } = data;
 
 	$: logged_user_is_following = user
 		? followers.find(
@@ -10,23 +10,23 @@
 		  )
 		: false;
 
-	$: console.log(logged_user_is_following);
+	$: console.log(`logged_user_is_following: ${logged_user_is_following}`);
 
 	$: logged_user_has_blocked = user
-		? user.blocked.find(
-				(b: { blockedUserId: string; blockedById: string }) => b.blockedUserId === user.userId
+		? blockedUser.find(
+				(b: { blockedById: string; blockedUserId: string }) => b.blockedById === user.userId
 		  )
 		: false;
 
-	$: console.log(logged_user_has_blocked);
+	$: console.log(`logged_user_has_blocked: ${logged_user_has_blocked}`);
 
 	$: logged_user_is_blocked = user
-		? user.blocked.find(
-				(b: { blockedUserId: string; blockedById: string }) => b.blockedById === user.userId
+		? blockedBy.find(
+				(b: { blockedById: string; blockedUserId: string }) => b.blockedUserId === user.userId
 		  )
 		: false;
 
-	$: console.log(logged_user_is_blocked);
+	$: console.log(`logged_user_is_blocked: ${logged_user_is_blocked}`);
 </script>
 
 <section class="flex flex-col items-center gap-2">
