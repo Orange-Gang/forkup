@@ -1,17 +1,30 @@
 import { prisma_client } from '$lib/prisma';
 import { error } from '@sveltejs/kit';
+import type { PageServerLoad, Actions } from './$types';
 
-export async function load() {
+export const load: PageServerLoad = async ({ locals }) => {
+	const session = await locals.auth.validate();
+	const logged_user = session?.user;
+
+	let blocked_user_ids: string[] = [];
+	if (logged_user) {
+		const blocked_users = await prisma_client.blocked.findMany({
+			where: { OR: [{ blockedById: logged_user.id }, { blockedUserId: logged_user.id }] },
+			select: { blockedById: true, blockedUserId: true }
+		});
+		blocked_user_ids = blocked_users.flatMap((b) => [b.blockedById, b.blockedUserId]);
+	}
+
 	const firehose = await prisma_client.post.findMany({
 		take: 10,
 		include: { author: true },
-		orderBy: { createdAt: 'desc' }
+		orderBy: { createdAt: 'desc' },
+		where: { author: { NOT: { id: { in: blocked_user_ids } } } }
 	});
 
 	return { firehose };
-}
-
-export const actions = {
+};
+export const actions: Actions = {
 	createPost: async ({ locals, request }) => {
 		const form = await request.formData();
 		const content = form.get('content') as string;

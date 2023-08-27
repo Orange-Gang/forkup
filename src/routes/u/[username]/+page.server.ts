@@ -1,7 +1,8 @@
 import { prisma_client } from '$lib/prisma';
 import { error } from '@sveltejs/kit';
+import type { PageServerLoad, Actions } from './$types';
 
-export async function load({ params }) {
+export const load: PageServerLoad = async ({ params }) => {
 	const user_data = await prisma_client.user.findUnique({
 		where: { username: params.username },
 		include: {
@@ -20,9 +21,9 @@ export async function load({ params }) {
 	const { posts, followers, following, blockedBy, blockedUser, ...current_user } = user_data;
 
 	return { current_user, posts, followers, following, blockedBy, blockedUser };
-}
+};
 
-export const actions = {
+export const actions: Actions = {
 	follow: async ({ request, locals }) => {
 		const session = await locals.auth?.validate();
 		const logged_user = session?.user;
