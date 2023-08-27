@@ -9,18 +9,23 @@
 				(f: { followerId: string; followingId: string }) => f.followerId === user.userId
 		  )
 		: false;
+
 	$: console.log(logged_user_is_following);
+
 	$: logged_user_has_blocked = user
 		? user.blocked.find(
-				(b: { blockedId: string; blockerId: string }) => b.blockedId === user.userId
+				(b: { blockedUserId: string; blockedById: string }) => b.blockedUserId === user.userId
 		  )
 		: false;
+
 	$: console.log(logged_user_has_blocked);
+
 	$: logged_user_is_blocked = user
 		? user.blocked.find(
-				(b: { blockedId: string; blockerId: string }) => b.blockerId === user.userId
+				(b: { blockedUserId: string; blockedById: string }) => b.blockedById === user.userId
 		  )
 		: false;
+
 	$: console.log(logged_user_is_blocked);
 </script>
 
