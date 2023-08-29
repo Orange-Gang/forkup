@@ -7,8 +7,6 @@
 	export let data: PageServerData;
 	const user = $page.data.user;
 	const following_firehose = data.following_firehose;
-
-	console.log(typeof following_firehose);
 </script>
 
 <h3 class="text-2xl">Home</h3>
