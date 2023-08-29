@@ -15,6 +15,8 @@ export const load: PageServerLoad = async ({ locals }) => {
 		},
 		include: {
 			posts: {
+				orderBy: { createdAt: 'asc' },
+				take: 10,
 				include: {
 					author: true
 				}
