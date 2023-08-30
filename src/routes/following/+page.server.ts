@@ -15,7 +15,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 		},
 		include: {
 			posts: {
-				orderBy: { createdAt: 'asc' },
+				orderBy: { createdAt: 'desc' },
 				take: 10,
 				include: {
 					author: true
@@ -24,5 +24,5 @@ export const load: PageServerLoad = async ({ locals }) => {
 		}
 	});
 
-	return { following_firehose: followingFirehose[0].posts };
+	return { following_firehose: followingFirehose[0]?.posts ?? null };
 };
