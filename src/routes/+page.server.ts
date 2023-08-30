@@ -1,7 +1,8 @@
 import { prisma_client } from '$lib/prisma';
 import { error } from '@sveltejs/kit';
+import type { PageServerLoad, Actions } from './$types';
 
-export async function load() {
+export const load: PageServerLoad = async () => {
 	const firehose = await prisma_client.post.findMany({
 		take: 10,
 		include: { author: true },
@@ -9,9 +10,9 @@ export async function load() {
 	});
 
 	return { firehose };
-}
+};
 
-export const actions = {
+export const actions: Actions = {
 	createPost: async ({ locals, request }) => {
 		const form = await request.formData();
 		const content = form.get('content') as string;
