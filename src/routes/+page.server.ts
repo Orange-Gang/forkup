@@ -9,7 +9,7 @@ export const load: PageServerLoad = async () => {
 		orderBy: { createdAt: 'desc' }
 	});
 
-  console.log({ firehose });
+	console.log({ firehose });
 
 	return { firehose };
 };

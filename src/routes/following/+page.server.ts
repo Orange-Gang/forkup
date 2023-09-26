@@ -15,15 +15,14 @@ export const load: PageServerLoad = async ({ locals }) => {
 		},
 		include: {
 			posts: {
-				orderBy: { createdAt: 'desc', },
+				orderBy: { createdAt: 'desc' },
 				take: 10,
 				include: {
-					author: true,
+					author: true
 				}
 			}
 		}
 	});
-
 
 	return { following_firehose: followingFirehose[0]?.posts ?? null };
 };
