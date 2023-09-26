@@ -7,6 +7,8 @@
 	export let data: PageServerData;
 	const firehose = data?.firehose;
 	const user = $page.data.user;
+
+	console.log({ firehose });
 </script>
 
 <h3 class="text-2xl">Home</h3>
